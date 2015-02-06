@@ -1,3 +1,5 @@
+package src;
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Frame;
@@ -72,7 +74,7 @@ public class GUI {
 							
 		     }
 		});
-		ImageIcon closeIcon = new ImageIcon("E:/Bibliotheek/Documenten/Workspaces/Agenda/img/Xicon.png");
+		ImageIcon closeIcon = new ImageIcon("res/img/Xicon.png");
 	    JLabel closeLabel = new JLabel(closeIcon);
 	    closeLabel.setBounds(983, 11, 18, 18);
 	    closeLabel.addMouseListener(new MouseAdapter() {
@@ -80,7 +82,7 @@ public class GUI {
 	    	  frame.dispose();
 	      }
 	    });
-	    ImageIcon min = new ImageIcon("E:/Bibliotheek/Documenten/Workspaces/Agenda/img/_icon.png");
+	    ImageIcon min = new ImageIcon("res/img/_icon.png");
 	    JLabel minLabel = new JLabel(min);
 	    minLabel.setBounds(948, 11, 18, 18);
 	    minLabel.addMouseListener(new MouseAdapter() {
