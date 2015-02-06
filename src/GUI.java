@@ -1,5 +1,10 @@
 package src;
 
+import src.agenda.Act;
+import src.agenda.Agenda;
+import src.agenda.Artist;
+import src.agenda.Stage;
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Frame;
@@ -38,6 +43,14 @@ public class GUI {
 	 */
 	public GUI() {
 		initialize();
+        
+        //test agenda.
+        Agenda agenda = new Agenda();
+        agenda.addArtist(new Artist("Iron Maiden", "Heavy metal"));
+        agenda.addStage(new Stage("Mainstage"));
+        agenda.addAct(new Act(agenda.getStages().get(0), "Heavy metal", agenda.getArtists().get(0)));
+        
+        System.out.println(agenda);
 	}
 
 	/**
@@ -103,7 +116,6 @@ public class GUI {
 	}
 
 	protected void setLocation(int i, int j) {
-		
 		frame.setLocation(i,j);
 	}
 }
