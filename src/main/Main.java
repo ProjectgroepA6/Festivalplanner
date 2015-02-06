@@ -1,6 +1,6 @@
-package main;
+package src.main;
 
-import agenda.Agenda;
+import src.agenda.Agenda;
 
 public class Main {
 

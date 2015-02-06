@@ -1,4 +1,4 @@
-package agenda;
+package src.agenda;
 
 public class Artist {
 
