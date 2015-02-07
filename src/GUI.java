@@ -1,9 +1,6 @@
 package src;
 
-import src.agenda.Act;
-import src.agenda.Agenda;
-import src.agenda.Artist;
-import src.agenda.Stage;
+import src.agenda.*;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -51,6 +48,9 @@ public class GUI {
         agenda.addAct(new Act(agenda.getStages().get(0), "Heavy metal", agenda.getArtists().get(0)));
         
         System.out.println(agenda);
+        
+        //test time
+        System.out.println(new ActTime(new Time(10, 30), new Time(11, 20)).getLength());
 	}
 
 	/**
