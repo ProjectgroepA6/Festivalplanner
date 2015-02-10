@@ -16,8 +16,28 @@ public class Agenda {
         this.stages = new ArrayList<Stage>();
         this.artists = new ArrayList<Artist>();
         this.acts = new ArrayList<Act>();
+        
+        this.testAgenda();
     }
 
+    private void testAgenda(){
+        //stages
+        this.stages.add(new Stage("Main stage"));
+        this.stages.add(new Stage("Tent stage"));
+        
+        //artiesten
+        this.artists.add(new Artist("Iron Maiden", "Heavy metal"));
+        this.artists.add(new Artist("Slayer", "Tresh metal"));
+        this.artists.add(new Artist("Sabaton", "Power metal"));
+
+        //acts
+        this.acts.add(new Act(this.stages.get(0), "Heavy metal", new Time(21, 00), new Time(23, 00), this.artists.get(0)));
+        this.acts.add(new Act(this.stages.get(1), "Test metal" ,new Time(10, 10), new Time(10, 50), this.artists.get(1)));
+        this.acts.add(new Act(this.stages.get(0), "Power metal" ,new Time(10, 10), new Time(10, 50), this.artists.get(2)));
+        
+        System.out.println(this);
+    }
+    
     public List<Stage> getStages() {
         return stages;
     }
@@ -46,8 +66,8 @@ public class Agenda {
     public String toString(){
         String string = "";
         for(Act act: this.acts){
-            string += act + "\n";
+            string += act + "\n\n";
         }
-        return string;        
+        return string;
     }
 }

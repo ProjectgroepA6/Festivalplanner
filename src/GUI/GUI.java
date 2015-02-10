@@ -43,14 +43,15 @@ public class GUI {
         
         //test agenda.
         Agenda agenda = new Agenda();
-        agenda.addArtist(new Artist("Iron Maiden", "Heavy metal"));
-        agenda.addStage(new Stage("Mainstage"));
-        agenda.addAct(new Act(agenda.getStages().get(0), "Heavy metal", agenda.getArtists().get(0)));
         
-        System.out.println(agenda);
-        
-        //test time
-        System.out.println(new ActTime(new Time(10, 30), new Time(11, 20)).getLength());
+//        agenda.addArtist(new Artist("Iron Maiden", "Heavy metal"));
+//        agenda.addStage(new Stage("Mainstage"));
+//        agenda.addAct(new Act(agenda.getStages().get(0), "Heavy metal", agenda.getArtists().get(0)));
+//
+//        System.out.println(agenda);
+//
+//        //test time
+//        System.out.println(new ActTime(new Time(10, 30), new Time(11, 20)).getLength());
 	}
 
 	/**
