@@ -15,5 +15,5 @@ public class MainFrame extends JFrame{
 		this.setUndecorated(false);
 		this.setJMenuBar(new MenuBar());
 		this.setVisible(true);
-	}	
+	}
 }

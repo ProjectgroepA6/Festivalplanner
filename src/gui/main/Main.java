@@ -5,6 +5,8 @@ import gui.panels.MainPanel;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import java.awt.*;
+import java.lang.reflect.Method;
 
 
 public class Main {
