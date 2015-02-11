@@ -13,10 +13,10 @@ public class Act {
     private String genre;
     private ActTime actTime;
 
-    public Act(Stage stage, String genre, Time startTime, Time endTime, Artist... artists){
+    public Act(Stage stage, String genre, ActTime actTime, Artist... artists){
         this.stage = stage; 
         this.genre = genre;
-        this.actTime = new ActTime(startTime, endTime);
+        this.actTime = actTime;
 
         this.artists = new ArrayList<Artist>();
         for(Artist artist: artists) {
@@ -52,7 +52,7 @@ public class Act {
      * * return the act time.
      * @return the act time in minutes
      */
-    public int getActTime() {
+    public long getActTime() {
         return this.actTime.getLength();
     }
     
