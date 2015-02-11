@@ -10,7 +10,7 @@ public class MainPanel extends JPanel{
 		this.setLayout(new BorderLayout());
 		this.add(new InfoPane(), BorderLayout.WEST);
 		this.add(new AgendaPane(), BorderLayout.CENTER);;
-		
+		this.add(new DaySelectorPane(), BorderLayout.SOUTH);
 		
 	}
 }
