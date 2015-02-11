@@ -1,7 +1,7 @@
 package main;
 
-import panels.MainPanel;
 import frames.MainFrame;
+import panels.MainPanel;
 
 
 public class Main {

@@ -1,4 +1,4 @@
-package src.agenda;
+package agenda;
 
 import java.util.ArrayList;
 import java.util.List;

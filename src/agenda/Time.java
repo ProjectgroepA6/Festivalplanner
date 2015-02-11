@@ -1,4 +1,4 @@
-package src.agenda;
+package agenda;
 
 /**
  * Created by gjoosen on 07/02/15.
