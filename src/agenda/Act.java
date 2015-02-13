@@ -39,6 +39,10 @@ public class Act {
     public Stage getStage() {
         return stage;
     }
+    
+    public void setStage(Stage stage) {
+		this.stage = stage;
+	}
 
     /**
      * * returns the genre of the act.
