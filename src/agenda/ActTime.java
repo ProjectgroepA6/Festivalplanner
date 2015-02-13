@@ -25,7 +25,7 @@ public class ActTime {
     	endTime.set(y,m-1,d,hh,mm);
     }
     
-    public String getBeginTime(){
+    public String getBeginTimeString(){
     	return 	beginTime.get(Calendar.YEAR) + "-" + 
     			beginTime.get(Calendar.MONTH) + "-" + 
     			(beginTime.get(Calendar.DATE)+1) + " " + 
@@ -33,20 +33,28 @@ public class ActTime {
     			beginTime.get(Calendar.MINUTE);
     }
     
-    public String getEndTime(){
+    public String getEndTimeString(){
     	return 	endTime.get(Calendar.YEAR) + "-" + 
     			endTime.get(Calendar.MONTH) + "-" + 
     			(endTime.get(Calendar.DATE)+1) + " " + 
     			endTime.get(Calendar.HOUR_OF_DAY) + ":" +
     			endTime.get(Calendar.MINUTE);
     }
-   
-    public long getLength(){
-    	return (endTime.getTimeInMillis()/60000)-(beginTime.getTimeInMillis()/60000);
+    
+    public GregorianCalendar getBeginTime() {
+		return beginTime;
+	}
+
+	public GregorianCalendar getEndTime() {
+		return endTime;
+	}
+  
+    public int getLength(){
+    	return (int) ((endTime.getTimeInMillis()/60000)-(beginTime.getTimeInMillis()/60000));
     }
   
     @Override
     public String toString(){
-        return "start time: " + this.getBeginTime() + "\nend time: " + this.getEndTime() + "\nlength: " + getLength() + " Minuts";
+        return "start time: " + this.getBeginTimeString() + "\nend time: " + this.getEndTimeString() + "\nlength: " + getLength() + " Minuts";
     }
 }
