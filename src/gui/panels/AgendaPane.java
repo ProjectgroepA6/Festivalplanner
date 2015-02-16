@@ -36,15 +36,13 @@ public class AgendaPane extends JPanel {
 		this.setPreferredSize(new Dimension(600, yspacing*48+heightoffset));
 		agendaItems = new ArrayList<AgendaItemShape>();
 		clickedItem = new int[]{-1};
-		
 		for(Act act: agenda.getActs()){
-			agendaItems.add(new AgendaItemShape(act, agenda.getStages().indexOf(act.getStage()), Color.red));
+			agendaItems.add(new AgendaItemShape(act, agenda.getStages().indexOf(act.getStage()), new Color(250,209,101)));
 		}
 		for(AgendaItemShape a:agendaItems){
 			a.setSize((int) a.getWidth(), (int) (a.getLength()* (yspacing/30.0)));
 			a.setLocation((int)a.getY(), (int) (a.getBeginTime() * (yspacing/30.0)+heightoffset));
 		}
-
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -92,9 +90,7 @@ public class AgendaPane extends JPanel {
 			}
 		}
 		return new int[]{-1}; //Clicked outside all the agenda-items so return a -1
-	}
-	
-	
+	}	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;		
@@ -170,10 +166,17 @@ public class AgendaPane extends JPanel {
 			
 			g2.setColor(agendaItem.getColor());			//Fills the item with a given 
 			g2.fill(agendaItem);
-			g2.setColor(Color.WHITE);
-			g2.drawString(agendaItem.getName(), (int)agendaItem.getX() +5, (int)agendaItem.getY() +15);
-			g2.drawString(agendaItem.getTime().getBeginTimeString(), (int)agendaItem.getX() +5, (int)agendaItem.getY() +30);
-			g2.drawString(agendaItem.getTime().getEndTimeString(), (int)agendaItem.getX() +5, (int)agendaItem.getY() +45);		
+			g2.setColor(agendaItem.getColor().darker());
+			g2.draw(agendaItem);
+			g2.setColor(Color.BLACK);
+			
+			if(agendaItem.getHeight() < 50){
+				g2.drawString(agendaItem.getName() + " " + agendaItem.getTime().getBeginTimeString() + " - " + agendaItem.getTime().getEndTimeString(), (int)agendaItem.getX() +5, (int)agendaItem.getY() +15);
+			}else{
+				g2.drawString(agendaItem.getName(), (int)agendaItem.getX() +5, (int)agendaItem.getY() +15);
+				g2.drawString(agendaItem.getTime().getBeginTimeString(), (int)agendaItem.getX() +5, (int)agendaItem.getY() +30);
+				g2.drawString(agendaItem.getTime().getEndTimeString(), (int)agendaItem.getX() +5, (int)agendaItem.getY() +45);
+			}
 		}
 	}	
 }
