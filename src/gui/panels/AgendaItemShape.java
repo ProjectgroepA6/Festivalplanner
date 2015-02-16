@@ -6,6 +6,7 @@ import java.util.Calendar;
 
 import agenda.Act;
 import agenda.ActTime;
+import agenda.Artist;
 import agenda.Stage;
 
 public class AgendaItemShape extends Rectangle{
@@ -41,7 +42,11 @@ public class AgendaItemShape extends Rectangle{
 		return act.getActTime();
 	}
 	public String getName() {
-		return act.getStage().getName();
+        String string = "";
+		for(Artist artist: act.getArtists()){
+            string += artist.getName() + "\n";
+        }
+		return string;
 	}
 	public int getBeginTime(){
 		return getTime().getBeginTime().get(Calendar.MINUTE) + getTime().getBeginTime().get(Calendar.HOUR_OF_DAY)*60;

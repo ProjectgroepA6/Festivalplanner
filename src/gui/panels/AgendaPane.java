@@ -9,9 +9,12 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
 import javax.swing.JPanel;
 
 import agenda.Act;
@@ -30,15 +33,22 @@ public class AgendaPane extends JPanel {
 	
 	public AgendaPane(Agenda agenda){
 		this.agenda = agenda;
+		this.setPreferredSize(new Dimension(600, yspacing*48+heightoffset));
 		agendaItems = new ArrayList<AgendaItemShape>();
-		for(Act act: agenda.getActs()){
-			agendaItems.add(new AgendaItemShape(act, stageToInt(act.getStage()), Color.red));
-		}		
-		this.setPreferredSize(new Dimension(agenda.getStages().size()*100, yspacing*48+heightoffset));
 		clickedItem = new int[]{-1};
+		
+		for(Act act: agenda.getActs()){
+			agendaItems.add(new AgendaItemShape(act, agenda.getStages().indexOf(act.getStage()), Color.red));
+		}
+		for(AgendaItemShape a:agendaItems){
+			a.setSize((int) a.getWidth(), (int) (a.getLength()* (yspacing/30.0)));
+			a.setLocation((int)a.getY(), (int) (a.getBeginTime() * (yspacing/30.0)+heightoffset));
+		}
+
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
+				repaint();
 				clickedItem = new int[]{-1};			
 				setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
@@ -84,12 +94,6 @@ public class AgendaPane extends JPanel {
 		return new int[]{-1}; //Clicked outside all the agenda-items so return a -1
 	}
 	
-	public int stageToInt(Stage stage){
-		return agenda.getStages().indexOf(stage);
-	}
-	public Stage intToStage(int i){
-		return agenda.getStages().get(i);
-	}
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -113,39 +117,43 @@ public class AgendaPane extends JPanel {
 			g2.drawLine(0, i*yspacing+heightoffset, getWidth(), i*yspacing+heightoffset); //draws the horizontal time lines
 		}
 		
-		for(AgendaItemShape agendaItem: agendaItems){				
+		for(AgendaItemShape agendaItem: agendaItems){	
 			if(clickedItem[0] == -1){ //Window is resized, only resize & place the items 
-				agendaItem.setSize(xspacing-itempadding*2, (int) (agendaItem.getLength()* (yspacing/30.0)));
-				agendaItem.setLocation(agendaItem.getRow()*xspacing+itempadding, (int) (agendaItem.getBeginTime() * (yspacing/30.0)+heightoffset));
-			}else if(agendaItems.get(clickedItem[0]) == agendaItem){ // The element is moved
-				if(clickedItem[1] == 0){ //if the item is moved, not resized
+				agendaItem.setSize(xspacing-itempadding*2, (int) (agendaItem.getHeight()));
+				agendaItem.setLocation(agendaItem.getRow()*xspacing+itempadding, (int) agendaItem.getY());
+			}else if(agendaItems.get(clickedItem[0]) == agendaItem){ // The agenda item is moved
+				if(clickedItem[1] == 0){ //if the agenda item is moved, not resized
 					if(agendaItem.getX() / xspacing > agenda.getStages().size()-1){ // outside the window on the right
 						agendaItem.setLocation((int)xspacing*(agenda.getStages().size()-1)+itempadding, (int)agendaItem.getY()+heightoffset);
 					}else if(agendaItem.getX() / xspacing < 0){ // outside the window on the left
 						agendaItem.setLocation((int)itempadding, (int)agendaItem.getY()+heightoffset);
-					}else{ //inside the window, stick it to a row
+					}else{ //inside the window, stick it to a stage
 						agendaItem.setLocation((int) Math.round(agendaItem.getX() / xspacing)*xspacing+itempadding, (int)agendaItem.getY()+heightoffset);
 					}
 					if(agendaItem.getY() < heightoffset){ // outside the window on the top
 						agendaItem.setLocation((int)agendaItem.getX(), heightoffset);
-					}else if(agendaItem.getHeight() > 48*yspacing+heightoffset){ // outside the window on the bottom
-						agendaItem.setLocation((int)agendaItem.getX(),48*yspacing+heightoffset);
+					}else if(agendaItem.getHeight()+agendaItem.getY() > 48*yspacing+heightoffset){ // outside the window on the bottom
+						agendaItem.setLocation((int)agendaItem.getX(),(48*yspacing+heightoffset)-(int)agendaItem.getHeight()-1);
 					}	
+				}else if(clickedItem[1] == 2){ //agenda item is resized
+					if(agendaItem.getHeight() < 30){ //check the height of the item
+						agendaItem.setSize((int) agendaItem.getWidth(), 30);
+					}else if(agendaItem.getHeight()+agendaItem.getY() > 48*yspacing+heightoffset){ // outside the window on the bottom
+						agendaItem.setSize((int)agendaItem.getWidth(),(int) ((48*yspacing+heightoffset)-agendaItem.getY()-1));
+					}		
 				}
-				
-				if(agendaItem.getHeight() < 30){ //check the height of the item
-					agendaItem.setSize((int) agendaItem.getWidth(), 30);
-				}
-				
 				for(AgendaItemShape agendaItem2: agendaItems){ //check if there are any collisions with other items
 					if(agendaItem2 != agendaItem){
 						if(agendaItem.intersects(agendaItem2)){	//intersection found
-							if( agendaItem.getHeight()+agendaItem.getY() > agendaItem2.getY() && agendaItem.getY() > agendaItem2.getY()){
+							if( agendaItem.getHeight()+agendaItem.getY() > agendaItem2.getY() && agendaItem.getY() > agendaItem2.getY()){//collision on the bottom of another item
 								agendaItem.setLocation((int)agendaItem.getX(), (int)(agendaItem2.getY()+agendaItem2.getHeight()));
-							}else if(agendaItem.getY() <= agendaItem2.getY()){
-								if(clickedItem[1] == 0){
+							}else if(agendaItem.getY() <= agendaItem2.getY()){//collision on the top of another item
+								if(clickedItem[1] == 0){//item was moved, only change location
 									agendaItem.setLocation((int)agendaItem.getX(), (int)(agendaItem2.getY()-agendaItem.getHeight()));
-								}else if(clickedItem[1] == 2){
+									if(agendaItem.getY() < heightoffset){
+										agendaItem.y = (int) (agendaItem2.getY() + agendaItem2.getHeight());
+									}
+								}else if(clickedItem[1] == 2){//item was resized, only change the size
 									agendaItem.setSize((int)agendaItem.getWidth(), (int)(agendaItem2.getY()-agendaItem.getY()));
 								}
 							}
@@ -153,15 +161,14 @@ public class AgendaPane extends JPanel {
 					}
 				}	 
 				//update the new data to the Act
-				agendaItem.setStage(intToStage((int) Math.round(agendaItem.getX() / xspacing)), (int) Math.round(agendaItem.getX() / xspacing));
+				agendaItem.setStage(agenda.getStages().get((int) Math.round(agendaItem.getX() / xspacing)), (int) Math.round(agendaItem.getX() / xspacing));
 				agendaItem.getTime().getBeginTime().set((GregorianCalendar.MINUTE), (int) Math.round((agendaItem.getY()-heightoffset)/45*30)%60);
 				agendaItem.getTime().getBeginTime().set((GregorianCalendar.HOUR_OF_DAY), (int) Math.round((agendaItem.getY()-heightoffset)/45*30)/60);
 				agendaItem.getTime().getEndTime().set(GregorianCalendar.MINUTE, (int) Math.round((agendaItem.getY()+agendaItem.getHeight()-heightoffset)/45*30)%60);
 				agendaItem.getTime().getEndTime().set(GregorianCalendar.HOUR_OF_DAY, (int) Math.round((agendaItem.getY()+agendaItem.getHeight()-heightoffset)/45*30)/60);
-
 			}
 			
-			g2.setColor(agendaItem.getColor());			//Fills the item with a color 
+			g2.setColor(agendaItem.getColor());			//Fills the item with a given 
 			g2.fill(agendaItem);
 			g2.setColor(Color.WHITE);
 			g2.drawString(agendaItem.getName(), (int)agendaItem.getX() +5, (int)agendaItem.getY() +15);
