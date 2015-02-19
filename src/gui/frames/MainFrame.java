@@ -1,12 +1,11 @@
 package gui.frames;
 
-import agenda.Agenda;
 import gui.menubar.MenuBar;
 import gui.panels.MainPanel;
-import gui.panels.edit.EditPane;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+
+import agenda.Agenda;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame{
@@ -15,7 +14,7 @@ public class MainFrame extends JFrame{
     
     public MainFrame(){
         this.agenda = new Agenda();
-        this.add(new EditPane(this.agenda));
+        this.add(new MainPanel(this.agenda));
 		this.setResizable(true);
 		this.setBounds(100,100,1440,900);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
