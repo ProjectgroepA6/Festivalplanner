@@ -18,9 +18,12 @@ public class ArtistPane extends JPanel {
 
     private JList artistList;
     private Agenda agenda;
+    private DefaultListModel model;
     
     public ArtistPane(Agenda agenda){
         this.agenda = agenda;
+        this.model = new DefaultListModel();
+
         super.setLayout(new BorderLayout());
         super.add(new Label("Artists"), BorderLayout.NORTH);
         super.add(new JPanel(), BorderLayout.EAST);
@@ -28,22 +31,21 @@ public class ArtistPane extends JPanel {
         super.add(this.buttonRow(), BorderLayout.SOUTH);
 
         //the JList needs an array, so you have to go from the List to an array.
-        Artist[] artists = new Artist[this.agenda.getArtists().size()];
-        int i = 0;
+
         for(Artist artist: this.agenda.getArtists()){
-            artists[i] = artist;
-            i++;
+            this.model.addElement(artist);
         }
-
+        
         //initialize the JList with the artist objects.
-        this.artistList = new JList(artists);
+        this.artistList = new JList();
 
+        this.artistList.setModel(this.model);
+        
         //the cell renderer.
         this.artistList.setCellRenderer(new ArtistCellRenderer());
 
         //the JList inside a scrollPane.
         JScrollPane scrollPane = new JScrollPane(this.artistList);
-
         super.add(scrollPane, BorderLayout.CENTER);
     }
     
@@ -55,8 +57,7 @@ public class ArtistPane extends JPanel {
         addArtist.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JDialog dialog = new JDialog();
-                dialog.setContentPane(new AddArtistDialogPanel());
+                JDialog dialog = new AddArtistDialogPanel(agenda, model);
                 dialog.pack();
                 dialog.setVisible(true);
             }
