@@ -2,6 +2,7 @@ package gui.main;
 
 import gui.frames.MainFrame;
 import gui.panels.MainPanel;
+import gui.panels.edit.EditPane;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -13,8 +14,7 @@ public class Main {
 	
 	public static void main(String[] args){
         
-		//sets the systems look and feels 
-        
+		//sets the systems look and feels
         //osx
         if(System.getProperties().getProperty("os.name").equals("Mac OS X")) {
             System.setProperty("apple.laf.useScreenMenuBar", "true");
@@ -26,7 +26,7 @@ public class Main {
 		}catch(ClassNotFoundException | InstantiationException| IllegalAccessException | UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-		new MainFrame(new MainPanel());
+		new MainFrame();
 	}
 }
 	

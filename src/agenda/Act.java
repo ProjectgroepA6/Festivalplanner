@@ -10,10 +10,11 @@ public class Act {
     
     private List<Artist> artists;
     private Stage stage;
-    private String genre;
+    private String genre, name;
     private ActTime actTime;
 
-    public Act(Stage stage, String genre, ActTime actTime, Artist... artists){
+    public Act(String name, Stage stage, String genre, ActTime actTime, Artist... artists){
+        this.name = name;
         this.stage = stage; 
         this.genre = genre;
         this.actTime = actTime;
@@ -50,6 +51,14 @@ public class Act {
      */
     public String getGenre() {
         return genre;
+    }
+
+    /**
+     * *
+     * @return act name
+     */
+    public String getName() {
+        return name;
     }
 
     /**

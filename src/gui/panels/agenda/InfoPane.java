@@ -1,4 +1,4 @@
-package gui.panels;
+package gui.panels.agenda;
 
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -20,7 +20,7 @@ public class InfoPane extends JPanel{
 	public void label(){
 		JLabel info = new JLabel("Information");
 		this.add(info);
-		
+
 	}
 	
 	public void textField(){

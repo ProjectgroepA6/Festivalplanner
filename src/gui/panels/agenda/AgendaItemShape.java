@@ -1,4 +1,4 @@
-package gui.panels;
+package gui.panels.agenda;
 
 import java.awt.Color;
 import java.awt.Rectangle;

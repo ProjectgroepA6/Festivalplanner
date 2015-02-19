@@ -1,4 +1,4 @@
-package gui.panels;
+package gui.panels.agenda;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -9,17 +9,13 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import javax.swing.JPanel;
 
 import agenda.Act;
 import agenda.Agenda;
-import agenda.Stage;
 
 @SuppressWarnings("serial")
 public class AgendaPane extends JPanel {
@@ -94,7 +90,15 @@ public class AgendaPane extends JPanel {
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;		
-		int xspacing = getWidth()/agenda.getStages().size()+20;
+        
+        
+        //agenda.getStages().size() mag niet 0 zijn (je mag niet delen door 0.)
+        int xspacing;
+        if(agenda.getStages().size() == 0){
+            xspacing = 0;
+        }else{
+            xspacing = getWidth()/agenda.getStages().size()+20;
+        }
 		for(int i = 0; i < agenda.getStages().size(); i++){
 			g2.setColor(Color.black);
 			g2.drawString(agenda.getStages().get(i).getName(), i*xspacing+itempadding, heightoffset/2);

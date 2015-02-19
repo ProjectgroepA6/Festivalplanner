@@ -31,9 +31,9 @@ public class Agenda {
         this.artists.add(new Artist("Sabaton", "Power metal"));
 
         //acts
-        this.acts.add(new Act(this.stages.get(0), "Heavy metal", new ActTime(2015,02,11,21,00  ,2015,02,11,23,00), this.artists.get(0)));
-        this.acts.add(new Act(this.stages.get(1), "Test metal" , new ActTime(2015,02,11,23,00  ,2015,02,12,04,30), this.artists.get(1)));
-        this.acts.add(new Act(this.stages.get(0), "Power metal" ,new ActTime(2015,02,11,20,00  ,2015,02,11,23,00), this.artists.get(2)));
+        this.acts.add(new Act(this.artists.get(0).getName(), this.stages.get(0), "Heavy metal", new ActTime(2015,02,11,21,00  ,2015,02,11,23,00), this.artists.get(0)));
+        this.acts.add(new Act(this.artists.get(1).getName(), this.stages.get(1), "Test metal" , new ActTime(2015,02,11,23,00  ,2015,02,12,04,30), this.artists.get(1)));
+        this.acts.add(new Act(this.artists.get(2).getName(), this.stages.get(0), "Power metal" ,new ActTime(2015,02,11,20,00  ,2015,02,11,23,00), this.artists.get(2)));
         
         System.out.println(this);
     }
