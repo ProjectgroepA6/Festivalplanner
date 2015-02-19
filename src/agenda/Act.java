@@ -54,10 +54,10 @@ public class Act {
 
     /**
      * * return the act time.
-     * @return the act time in minutes
+     * @return the act time object
      */
-    public long getActTime() {
-        return this.actTime.getLength();
+    public ActTime getActTime() {
+        return this.actTime;
     }
     
     @Override
