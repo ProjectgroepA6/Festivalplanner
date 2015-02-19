@@ -17,6 +17,7 @@ public class StagesPane extends JPanel {
 
     private JList stagesList;
     private Agenda agenda;
+    private DefaultListModel model;
     
     public StagesPane(Agenda agenda){
         this.agenda = agenda;
@@ -27,15 +28,15 @@ public class StagesPane extends JPanel {
         super.add(this.buttonRow(), BorderLayout.SOUTH);
 
         //the JList needs an array, so you have to go from the List to an array.
-        Stage[] stages = new Stage[this.agenda.getStages().size()];
-        int i = 0;
-        for(Stage stage: this.agenda.getStages()){
-            stages[i] = stage;
-            i++;
-        }
 
-        //initialize the JList with the artist objects.
-        this.stagesList = new JList(stages);
+        this.model = new DefaultListModel();
+
+        for(Stage stage: this.agenda.getStages()){
+            this.model.addElement(stage);
+        }
+        
+        this.stagesList = new JList();
+        this.stagesList.setModel(this.model);
 
         //the cell renderer.
         this.stagesList.setCellRenderer(new StageCellRenderer());
@@ -54,7 +55,7 @@ public class StagesPane extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JDialog dialog = new JDialog();
-                dialog.setContentPane(new AddStageDialogPanel());
+                dialog.setContentPane(new AddStageDialogPanel(agenda, model));
                 dialog.pack();
                 dialog.setVisible(true);
             }
