@@ -27,16 +27,16 @@ public class ActTime {
     
     public String getBeginTimeString(){
     	return 	beginTime.get(Calendar.YEAR) + "-" + 
-    			beginTime.get(Calendar.MONTH) + "-" + 
-    			(beginTime.get(Calendar.DATE)+1) + " " + 
+    			(beginTime.get(Calendar.MONTH)+1) + "-" + 
+    			beginTime.get(Calendar.DATE) + " " + 
     			beginTime.get(Calendar.HOUR_OF_DAY) + ":" +
     			beginTime.get(Calendar.MINUTE);
     }
     
     public String getEndTimeString(){
     	return 	endTime.get(Calendar.YEAR) + "-" + 
-    			endTime.get(Calendar.MONTH) + "-" + 
-    			(endTime.get(Calendar.DATE)+1) + " " + 
+    			(endTime.get(Calendar.MONTH)+1) + "-" + 
+    			endTime.get(Calendar.DATE) + " " + 
     			endTime.get(Calendar.HOUR_OF_DAY) + ":" +
     			endTime.get(Calendar.MINUTE);
     }
