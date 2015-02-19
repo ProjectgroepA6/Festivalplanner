@@ -62,6 +62,14 @@ public class Agenda {
         return acts;
     }
     
+    public void removeStage(Object obj){
+        this.stages.remove(obj);
+    }
+    
+    public void removeArtist(Artist artist){
+        this.artists.remove(artist);
+    }
+    
     @Override
     public String toString(){
         String string = "";

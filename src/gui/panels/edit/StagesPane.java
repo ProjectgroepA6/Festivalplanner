@@ -5,6 +5,8 @@ import agenda.Stage;
 import gui.panels.edit.dialogs.AddStageDialogPanel;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -61,7 +63,20 @@ public class StagesPane extends JPanel {
             }
         });
         buttonPane.add(addButton);
-        buttonPane.add(new Button("remove"));
+        
+        JButton remove = new JButton("remove");
+        remove.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object object = model.remove(stagesList.getSelectedIndex());
+                agenda.removeStage(object);
+                
+                System.out.println(model);
+                System.out.println(agenda.getStages());
+            }
+        });
+        
+        buttonPane.add(remove);
         return buttonPane;
     }
     

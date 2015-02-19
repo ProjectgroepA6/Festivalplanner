@@ -64,7 +64,20 @@ public class ArtistPane extends JPanel {
         });
         
         buttonPane.add(addArtist);
-        buttonPane.add(new Button("remove"));
+        
+        JButton removeButton = new JButton("remove");
+        removeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object object = model.remove(artistList.getSelectedIndex());
+                agenda.removeArtist((Artist) object);
+                
+                System.out.println(agenda.getArtists());
+                System.out.println(model);
+            }
+        });
+        buttonPane.add(removeButton);
+        
         return buttonPane;
     }
 }
