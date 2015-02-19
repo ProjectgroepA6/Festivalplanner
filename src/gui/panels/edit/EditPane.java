@@ -1,14 +1,14 @@
 package gui.panels.edit;
 
-import agenda.Agenda;
-import agenda.Artist;
-import com.sun.istack.internal.NotNull;
-import javafx.scene.layout.VBox;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.Label;
 
-import javax.swing.*;
-import javax.swing.border.Border;
-import java.awt.*;
-import java.util.ArrayList;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
+import agenda.Agenda;
 
 /**
  * Created by gjoosen on 13/02/15.

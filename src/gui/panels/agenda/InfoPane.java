@@ -1,33 +1,47 @@
 package gui.panels.agenda;
 
 import java.awt.Color;
-import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextPane;
 import javax.swing.border.LineBorder;
 
 @SuppressWarnings("serial")
 public class InfoPane extends JPanel{
 	public InfoPane(){
-		this.setLayout(new GridLayout(6,3,30,60));
 		this.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		label();
-		textField();
-	}
-	
-	public void label(){
-		JLabel info = new JLabel("Information");
-		this.add(info);
-
-	}
-	
-	public void textField(){
-		JTextPane infopane = new JTextPane();
-		infopane.setEditable(false);
-		infopane.setText("aaaaaa\r\nbbbbb\r\nccccc\r\nddddd\r\n");
-		this.add(infopane);
+		this.setLayout(new GridBagLayout());
 		
+		upperText();
+		middleText();
+	}
+	
+	public void upperText(){
+		InfoField upperPanel = new InfoField("Info upper","Blablablabla blablabla");
+		GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.NORTH;
+        c.insets = new Insets(0,20,0,20);
+        c.gridx = 2;
+        c.gridy = 0;
+        c.weightx = 1.0;
+        c.weighty = 0.0;   
+		this.add(upperPanel,c);
+	}
+	
+	public void middleText(){
+		InfoField middlePanel = new InfoField("Info mid","Blablablabla");
+		GridBagConstraints c = new GridBagConstraints();
+		c = new GridBagConstraints();
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = new Insets(0,20,0,20);
+		c.gridx = 2;
+        c.gridy = 1;    
+        c.weightx = 1.0;
+        c.weighty = 1.0;        
+
+		this.add(middlePanel,c);
 	}
 }
