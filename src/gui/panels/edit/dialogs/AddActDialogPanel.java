@@ -88,13 +88,16 @@ public class AddActDialogPanel extends JDialog{
         artists.setLayout(new BoxLayout(artists, BoxLayout.X_AXIS));
         
         //list
-        JList<Act> list = new JList();
+        final JList<Act> list = new JList();
         list.setCellRenderer(new ArtistCellRenderer());
         
         list.setModel(artistModel);
         
         JScrollPane scrollPane = new JScrollPane(list);
         artists.add(scrollPane);
+        
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         
         JButton addArtists = new JButton("+");
         addArtists.addActionListener(new ActionListener() {
@@ -129,15 +132,33 @@ public class AddActDialogPanel extends JDialog{
 
                 Artist[] artist = new Artist[listArtists.size()];
                 
+                if(listArtists.size() == 0){
+                    JOptionPane.showMessageDialog(null, "No artists to choose!");
+                    return;
+                }
+                
                 for(int i = 0; i<listArtists.size(); i++){
                     artist[i] = (Artist) listArtists.get(i);
                 }
                 Artist chosenArtist = (Artist) JOptionPane.showInputDialog(null, "add artist", "add artist", JOptionPane.PLAIN_MESSAGE, null, artist ,null);
-                artistModel.addElement(chosenArtist);
+                if(chosenArtist != null){
+                    artistModel.addElement(chosenArtist);
+                }
             }
         });
         
-        artists.add(addArtists);
+        JButton removeButton = new JButton("-");
+        removeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(list.getSelectedValue() != null){
+                    Object object = artistModel.remove(list.getSelectedIndex());
+                }
+            }
+        });
+        buttonPanel.add(addArtists);
+        buttonPanel.add(removeButton);
+        artists.add(buttonPanel);
         return artists;
     }
     
@@ -172,6 +193,23 @@ public class AddActDialogPanel extends JDialog{
         for(int i = 0; i < artistModel.size(); i++){
             artists[i] = (Artist) artistModel.get(i);
         }
+
+        if(this.name.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "A name is required!");
+            return;
+        }else if(this.genre.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "A genre is required!");
+            return;
+        }else if(this.stageComboBox.getSelectedItem() == null){
+            JOptionPane.showMessageDialog(null, "A stage is required!");
+            return;
+        }else if(artists.length == 0){
+            JOptionPane.showMessageDialog(null, "At least 1 artist is required!");
+            return;
+        }
+        
+        
+        
         
         Act act = new Act(this.name.getText(), (Stage) this.stageComboBox.getSelectedItem(), this.genre.getText(), new ActTime(2015,02,11,21,00  ,2015,02,11,23,00), artists);
         System.out.println(act);
