@@ -56,9 +56,10 @@ public class StagesPane extends JPanel {
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JDialog dialog = new JDialog();
-                dialog.setContentPane(new AddStageDialogPanel(agenda, model));
+                JDialog dialog = new AddStageDialogPanel(agenda, model);
+                dialog.setLocationRelativeTo(null);
                 dialog.pack();
+                dialog.setLocation(getCenterOfScreen(dialog));
                 dialog.setVisible(true);
             }
         });
@@ -79,7 +80,18 @@ public class StagesPane extends JPanel {
         buttonPane.add(remove);
         return buttonPane;
     }
-    
+
+    private Point getCenterOfScreen(JDialog dialog){
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = toolkit.getScreenSize();
+
+        int x = (int) ((screenSize.getWidth() - dialog.getWidth()) / 2);
+        int y = (int) ((screenSize.getHeight() - dialog.getHeight()) / 2);
+
+        Point center = new Point(x, y);
+        System.out.println(center.getX() + " - " + center.getY());
+        return center;
+    }
 }
 
 class StageCellRenderer extends JLabel implements ListCellRenderer {
@@ -103,5 +115,5 @@ class StageCellRenderer extends JLabel implements ListCellRenderer {
             setForeground(Color.black);
         }
           return this;
-    }
+    }   
 }

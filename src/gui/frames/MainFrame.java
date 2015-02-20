@@ -19,7 +19,7 @@ public class MainFrame extends JFrame{
     
     public MainFrame(){
         this.agenda = new Agenda();
-        this.currentPanel = new MainPanel(this.agenda);
+        this.currentPanel = new EditPane(this.agenda);
         this.add(this.currentPanel);
 		this.setResizable(true);
 		this.setBounds(100,100,1440,900);

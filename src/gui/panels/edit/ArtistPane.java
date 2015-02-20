@@ -58,6 +58,7 @@ public class ArtistPane extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JDialog dialog = new AddArtistDialogPanel(agenda, model);
+                dialog.setLocation(getCenterOfScreen(dialog));
                 dialog.pack();
                 dialog.setVisible(true);
             }
@@ -79,6 +80,18 @@ public class ArtistPane extends JPanel {
         buttonPane.add(removeButton);
         
         return buttonPane;
+    }
+
+    private Point getCenterOfScreen(JDialog dialog){
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = toolkit.getScreenSize();
+
+        int x = (int) ((screenSize.getWidth() - dialog.getWidth()) / 2);
+        int y = (int) ((screenSize.getHeight() - dialog.getHeight()) / 2);
+
+        Point center = new Point(x, y);
+        System.out.println(center.getX() + " - " + center.getY());
+        return center;
     }
 }
 

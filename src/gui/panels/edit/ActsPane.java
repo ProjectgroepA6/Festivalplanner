@@ -3,9 +3,12 @@ package gui.panels.edit;
 import agenda.Act;
 import agenda.Agenda;
 import agenda.Stage;
+import gui.panels.edit.dialogs.AddActDialogPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
@@ -15,25 +18,23 @@ public class ActsPane extends JPanel {
 
     private JList actsList;
     private Agenda agenda;
+    private DefaultListModel model;
 
     public ActsPane(Agenda agenda){
         this.agenda = agenda;
+        this.model = new DefaultListModel();
         super.setLayout(new BorderLayout());
         super.add(new Label("Acts"), BorderLayout.NORTH);
         super.add(new JPanel(), BorderLayout.EAST);
         super.add(new JPanel(), BorderLayout.WEST);
         super.add(this.buttonRow(), BorderLayout.SOUTH);
 
-        //the JList needs an array, so you have to go from the List to an array.
-        Act[] acts = new Act[this.agenda.getActs().size()];
-        int i = 0;
         for(Act act: this.agenda.getActs()){
-            acts[i] = act;
-            i++;
+            this.model.addElement(act);
         }
 
-        //initialize the JList with the artist objects.
-        this.actsList = new JList(acts);
+        this.actsList = new JList();
+        this.actsList.setModel(this.model);
 
         //the cell renderer.
         this.actsList.setCellRenderer(new ActCellRenderer());
@@ -47,9 +48,46 @@ public class ActsPane extends JPanel {
     private JPanel buttonRow(){
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.X_AXIS));
-        buttonPane.add(new Button("add"));
-        buttonPane.add(new Button("remove"));
+        
+        //add button
+        JButton addButton = new JButton("add");
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JDialog dialog = new AddActDialogPanel(agenda, model);
+                dialog.pack();
+                dialog.setLocation(getCenterOfScreen(dialog));
+                dialog.setVisible(true);
+            }
+        });
+        buttonPane.add(addButton);
+        
+        //remove button
+        JButton removeButton = new JButton("remove");
+        removeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object object = model.remove(actsList.getSelectedIndex());
+                agenda.removeAct((Act) object);
+                
+                System.out.println(model.size());
+                System.out.println(agenda.getActs().size());
+            }
+        });
+        buttonPane.add(removeButton);
         return buttonPane;
+    }
+
+    private Point getCenterOfScreen(JDialog dialog){
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = toolkit.getScreenSize();
+
+        int x = (int) ((screenSize.getWidth() - dialog.getWidth()) / 2);
+        int y = (int) ((screenSize.getHeight() - dialog.getHeight()) / 2);
+
+        Point center = new Point(x, y);
+        System.out.println(center.getX() + " - " + center.getY());
+        return center;
     }
     
 }

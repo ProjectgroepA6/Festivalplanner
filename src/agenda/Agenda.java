@@ -70,6 +70,10 @@ public class Agenda {
         this.artists.remove(artist);
     }
     
+    public void removeAct(Act act){
+        this.acts.remove(act);
+    }
+    
     @Override
     public String toString(){
         String string = "";

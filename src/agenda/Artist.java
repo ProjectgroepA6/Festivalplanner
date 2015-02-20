@@ -19,4 +19,9 @@ public class Artist {
     public String getGenre() {
         return genre;
     }
+    
+    @Override
+    public String toString(){
+        return this.name;
+    }
 }
