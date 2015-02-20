@@ -20,10 +20,13 @@ public class ArtistPane extends JPanel {
     private Agenda agenda;
     private DefaultListModel model;
     
-    public ArtistPane(Agenda agenda){
+    private JPanel detailsPanel;
+    
+    public ArtistPane(Agenda agenda, JPanel detailsPanel){
         this.agenda = agenda;
         this.model = new DefaultListModel();
-
+        this.detailsPanel = detailsPanel;
+        
         super.setLayout(new BorderLayout());
         super.add(new Label("Artists"), BorderLayout.NORTH);
         super.add(new JPanel(), BorderLayout.EAST);

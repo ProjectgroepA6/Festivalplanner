@@ -16,16 +16,18 @@ import agenda.Agenda;
 public class EditPane extends JPanel {
 
     private Agenda agenda;
+    private JPanel detailsPanel;
     
     public EditPane(Agenda agenda) {
         this.agenda = agenda;
         super.setBackground(Color.BLACK);
         super.setLayout(new GridLayout(1, 4));
 
-        super.add(this.detailsPanel());
-        super.add(new ArtistPane(this.agenda));
-        super.add(new StagesPane(this.agenda));
-        super.add(new ActsPane(this.agenda));
+        this.detailsPanel = this.detailsPanel();
+        super.add(this.detailsPanel);
+        super.add(new ArtistPane(this.agenda, this.detailsPanel));
+        super.add(new StagesPane(this.agenda, this.detailsPanel));
+        super.add(new ActsPane(this.agenda, this.detailsPanel));
     }
 
     private JPanel detailsPanel() {

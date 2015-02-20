@@ -21,8 +21,12 @@ public class StagesPane extends JPanel {
     private Agenda agenda;
     private DefaultListModel model;
     
-    public StagesPane(Agenda agenda){
+    private JPanel detailsPanel;
+    
+    public StagesPane(Agenda agenda, JPanel detailsPanel){
         this.agenda = agenda;
+        this.detailsPanel = detailsPanel;
+        
         super.setLayout(new BorderLayout());
         super.add(new Label("Stages"), BorderLayout.NORTH);
         super.add(new JPanel(), BorderLayout.EAST);

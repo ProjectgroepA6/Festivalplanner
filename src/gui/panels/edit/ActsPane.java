@@ -3,9 +3,12 @@ package gui.panels.edit;
 import agenda.Act;
 import agenda.Agenda;
 import agenda.Stage;
+import gui.panels.agenda.InfoPane;
 import gui.panels.edit.dialogs.AddActDialogPanel;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,10 +22,13 @@ public class ActsPane extends JPanel {
     private JList actsList;
     private Agenda agenda;
     private DefaultListModel model;
+    
+    private JPanel detailsPanel;
 
-    public ActsPane(Agenda agenda){
+    public ActsPane(Agenda agenda, final JPanel detailsPanel){
         this.agenda = agenda;
         this.model = new DefaultListModel();
+        this.detailsPanel = detailsPanel;
         super.setLayout(new BorderLayout());
         super.add(new Label("Acts"), BorderLayout.NORTH);
         super.add(new JPanel(), BorderLayout.EAST);
@@ -38,6 +44,15 @@ public class ActsPane extends JPanel {
 
         //the cell renderer.
         this.actsList.setCellRenderer(new ActCellRenderer());
+        
+        
+        this.actsList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                detailsPanel.removeAll();
+                detailsPanel.add(new InfoPane());
+            }
+        });
 
         //the JList inside a scrollPane.
         JScrollPane scrollPane = new JScrollPane(this.actsList);
