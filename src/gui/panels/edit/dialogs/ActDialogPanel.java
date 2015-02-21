@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by gjoosen on 20/02/15.
  */
-public class AddActDialogPanel extends JDialog{
+public class ActDialogPanel extends JDialog{
 
     private Agenda agenda;
     private JTextField name, genre;
@@ -20,8 +20,9 @@ public class AddActDialogPanel extends JDialog{
 
     private DefaultListModel model;
     private final DefaultListModel  artistModel = new DefaultListModel();
+    private Act act;
     
-    public AddActDialogPanel(Agenda agenda, DefaultListModel model){
+    public ActDialogPanel(Agenda agenda, DefaultListModel model){
         this.agenda = agenda;
         this.model = model;
 
@@ -40,6 +41,32 @@ public class AddActDialogPanel extends JDialog{
         super.add(main);
         super.setVisible(true);
         super.pack();
+    }
+
+    public ActDialogPanel(Agenda agenda, DefaultListModel model, Act act){
+        this.agenda = agenda;
+        this.model = model;
+        this.act = act;
+        
+        JPanel main = new JPanel();
+        main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
+        main.add(new Label("edit act"));
+        main.add(this.namePanel());
+        this.name.setText(act.getName());
+        //add
+        main.add(this.stageChooser(act));
+        main.add(this.genreChooser());
+        this.genre.setText(this.act.getGenre());
+        //todo dates
+        main.add(this.dates());
+
+        for(Artist artist: this.act.getArtists()){
+            this.artistModel.addElement(artist);
+        }
+        
+        main.add(this.artistsChooser());
+        main.add(this.buttons());
+        super.add(main);
     }
     
     private JPanel namePanel(){
@@ -66,6 +93,23 @@ public class AddActDialogPanel extends JDialog{
         
         return panel;
     }
+
+    private JPanel stageChooser(Act act){
+        JPanel panel = new JPanel();
+        this.stageComboBox = new JComboBox();
+        this.stageComboBox.addItem(act.getStage());
+        for(Stage stage: this.agenda.getStages()){
+            if(act.getStage() != stage){
+                this.stageComboBox.addItem(stage);
+            }
+        }
+
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.add(new JLabel("stage:"));
+        panel.add(this.stageComboBox);
+
+        return panel;
+    }
     
     private JPanel genreChooser(){
         JPanel genrePanel = new JPanel();
@@ -84,7 +128,7 @@ public class AddActDialogPanel extends JDialog{
     }
     
     private JPanel artistsChooser(){
-        final JPanel artists = new JPanel();
+        JPanel artists = new JPanel();
         artists.setLayout(new BoxLayout(artists, BoxLayout.X_AXIS));
         
         //list
@@ -161,7 +205,7 @@ public class AddActDialogPanel extends JDialog{
         artists.add(buttonPanel);
         return artists;
     }
-    
+
     private JPanel buttons(){
         JPanel buttons = new JPanel();
 
@@ -209,14 +253,20 @@ public class AddActDialogPanel extends JDialog{
         }
         
         
+        if(this.act == null){
+            Act act = new Act(this.name.getText(), (Stage) this.stageComboBox.getSelectedItem(), this.genre.getText(), new ActTime(2015,02,11,21,00  ,2015,02,11,23,00), artists);
+            this.model.addElement(act);
+            this.agenda.addAct(act);
+        }else{
+            this.act.setName(this.name.getText());
+            this.act.setGenre(this.genre.getText());
+            this.act.setStage((Stage) this.stageComboBox.getSelectedItem());
+            this.act.setArtists(artists);
+            this.model.removeElement(this.act);
+            this.model.addElement(act);
+        }
         
-        
-        Act act = new Act(this.name.getText(), (Stage) this.stageComboBox.getSelectedItem(), this.genre.getText(), new ActTime(2015,02,11,21,00  ,2015,02,11,23,00), artists);
         System.out.println(act);
-        
-        this.model.addElement(act);
-        this.agenda.addAct(act);
-        
         dispose();
 
     }

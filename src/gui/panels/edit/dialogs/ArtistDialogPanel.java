@@ -11,27 +11,46 @@ import java.awt.event.ActionListener;
 /**
  * Created by gjoosen on 19/02/15.
  */
-public class AddArtistDialogPanel extends JDialog{
+public class ArtistDialogPanel extends JDialog{
 
     private JTextField name, genre;
     private Agenda agenda;
 
     private DefaultListModel model;
+    
+    private Artist artist;
 
-    public AddArtistDialogPanel(Agenda agenda, DefaultListModel model){
+    public ArtistDialogPanel(Agenda agenda, DefaultListModel model){
         this.agenda = agenda;
         this.model = model;
 
         JPanel main = new JPanel();
         main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
-        main.add(new Label("new Stage"));
+        main.add(new Label("new artist"));
         main.add(this.namePanel());
         main.add(this.genrePanel());
         main.add(this.buttons());
         super.add(main);
         super.setVisible(true);
         super.pack();
+    }
+    
+    public ArtistDialogPanel(Agenda agenda, DefaultListModel model, Artist artist){
+        this.agenda = agenda;
+        this.model = model;
+        this.artist = artist;
 
+        JPanel main = new JPanel();
+        main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
+        main.add(new Label("edit artist"));
+        main.add(this.namePanel());
+        main.add(this.genrePanel());
+        main.add(this.buttons());
+
+        this.name.setText(this.artist.getName());
+        this.genre.setText(this.artist.getGenre());
+
+        super.add(main);
     }
 
     private JPanel genrePanel(){
@@ -92,9 +111,17 @@ public class AddArtistDialogPanel extends JDialog{
         }
 
         //Save artist
-        Artist artist = new Artist(this.name.getText(), this.genre.getText());
-        this.model.addElement(artist);
-        this.agenda.addArtist(artist);
+
+        if(this.artist == null){
+            Artist artist = new Artist(this.name.getText(), this.genre.getText());
+            this.model.addElement(artist);
+            this.agenda.addArtist(artist);
+        }else{
+            this.model.removeElement(this.artist);
+            this.artist.setName(this.name.getText());
+            this.artist.setGenre(this.genre.getText());
+            this.model.addElement(this.artist);
+        }
         super.dispose();
     }
 

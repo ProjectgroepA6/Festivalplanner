@@ -24,4 +24,12 @@ public class Artist {
     public String toString(){
         return this.name;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
 }

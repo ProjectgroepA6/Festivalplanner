@@ -12,27 +12,43 @@ import java.awt.event.ActionListener;
 /**
  * Created by gjoosen on 19/02/15.
  */
-public class AddStageDialogPanel extends JDialog{
+public class StageDialogPanel extends JDialog{
 
     private Agenda agenda;
     private DefaultListModel model;
     private JTextField name;
+    private Stage stage;
     
-    public AddStageDialogPanel(Agenda agenda, DefaultListModel model){
+    public StageDialogPanel(Agenda agenda, DefaultListModel model){
         this.agenda = agenda;
         this.model = model;
         
         JPanel main = new JPanel();
         main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
-        main.add(new Label("new Stage"));
+        main.add(new Label("new stage"));
         main.add(this.namePanel());
         main.add(this.buttons());
         super.add(main);
-        super.setVisible(true);
-        super.pack();
-
-
     }
+
+    //edit dialog.
+    public StageDialogPanel(Agenda agenda, DefaultListModel model, Stage stage){
+        this.agenda = agenda;
+        this.model = model;
+        this.stage = stage;
+
+        JPanel main = new JPanel();
+        main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
+        main.add(new Label("edit stage"));
+        main.add(this.namePanel());
+        main.add(this.buttons());
+        
+        this.name.setText(stage.getName());
+        
+        super.add(main);
+    }
+    
+    
     
     private JPanel namePanel(){
         JPanel name = new JPanel();
@@ -67,17 +83,29 @@ public class AddStageDialogPanel extends JDialog{
     }
     
     private void save(){
-        if(this.name.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Name can't be empty!", "Warning", JOptionPane.WARNING_MESSAGE);
-            return;
+        if(this.stage != null){
+            if(this.name.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Name can't be empty!", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }else{
+                this.model.removeElement(this.stage);
+                this.stage.setName(this.name.getText());
+                this.model.addElement(this.stage);
+                dispose();
+            }
         }else{
-            Stage stage = new Stage(this.name.getText());
-            this.agenda.addStage(stage);
-            this.model.addElement(stage);
-            dispose();
+            if(this.name.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Name can't be empty!", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }else{
+                Stage stage = new Stage(this.name.getText());
+                this.agenda.addStage(stage);
+                this.model.addElement(stage);
+                dispose();
+            }
         }
     }
-    
+
     private void cancel(){
         dispose();
     }

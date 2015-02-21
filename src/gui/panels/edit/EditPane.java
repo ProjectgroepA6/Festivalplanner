@@ -24,7 +24,6 @@ public class EditPane extends JPanel {
         super.setLayout(new GridLayout(1, 4));
 
         this.detailsPanel = this.detailsPanel();
-        super.add(this.detailsPanel);
         super.add(new ArtistPane(this.agenda, this.detailsPanel));
         super.add(new StagesPane(this.agenda, this.detailsPanel));
         super.add(new ActsPane(this.agenda, this.detailsPanel));

@@ -19,4 +19,8 @@ public class Stage {
     public String toString(){
         return this.name;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

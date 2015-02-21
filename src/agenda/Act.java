@@ -81,4 +81,19 @@ public class Act {
         string+= this.actTime;
         return string;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public void setArtists(Artist[] artists) {
+        this.artists = new ArrayList<>();
+        for(Artist artist: artists){
+            this.artists.add(artist);
+        }
+    }
 }

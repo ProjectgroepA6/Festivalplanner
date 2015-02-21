@@ -2,9 +2,7 @@ package gui.panels.edit;
 
 import agenda.Act;
 import agenda.Agenda;
-import agenda.Stage;
-import gui.panels.agenda.InfoPane;
-import gui.panels.edit.dialogs.AddActDialogPanel;
+import gui.panels.edit.dialogs.ActDialogPanel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -12,7 +10,6 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 /**
  * Created by gjoosen on 19/02/15.
@@ -20,15 +17,15 @@ import java.util.ArrayList;
 public class ActsPane extends JPanel {
 
     private JList actsList;
-    private Agenda agenda;
+    private final Agenda agenda;
     private DefaultListModel model;
     
     private JPanel detailsPanel;
 
-    public ActsPane(Agenda agenda, final JPanel detailsPanel){
+    public ActsPane(Agenda agenda, JPanel panel){
         this.agenda = agenda;
         this.model = new DefaultListModel();
-        this.detailsPanel = detailsPanel;
+        this.detailsPanel = panel;
         super.setLayout(new BorderLayout());
         super.add(new Label("Acts"), BorderLayout.NORTH);
         super.add(new JPanel(), BorderLayout.EAST);
@@ -49,8 +46,14 @@ public class ActsPane extends JPanel {
         this.actsList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                detailsPanel.removeAll();
-                detailsPanel.add(new InfoPane());
+                
+                if(e.getValueIsAdjusting()) {
+                    JDialog dialog = new ActDialogPanel(ActsPane.this.agenda, model, (Act) actsList.getSelectedValue());
+                    dialog.setLocation(getCenterOfScreen(dialog));
+                    dialog.setLocationRelativeTo(null);
+                    dialog.pack();
+                    dialog.setVisible(true);
+                }
             }
         });
 
@@ -69,7 +72,7 @@ public class ActsPane extends JPanel {
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JDialog dialog = new AddActDialogPanel(agenda, model);
+                JDialog dialog = new ActDialogPanel(agenda, model);
                 dialog.pack();
                 dialog.setLocation(getCenterOfScreen(dialog));
                 dialog.setVisible(true);

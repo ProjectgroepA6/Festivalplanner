@@ -2,7 +2,7 @@ package gui.panels.edit;
 
 import agenda.Agenda;
 import agenda.Stage;
-import gui.panels.edit.dialogs.AddStageDialogPanel;
+import gui.panels.edit.dialogs.StageDialogPanel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -10,7 +10,6 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
 
 /**
  * Created by gjoosen on 19/02/15.
@@ -18,7 +17,7 @@ import java.util.*;
 public class StagesPane extends JPanel {
 
     private JList stagesList;
-    private Agenda agenda;
+    private final Agenda agenda;
     private DefaultListModel model;
     
     private JPanel detailsPanel;
@@ -46,6 +45,20 @@ public class StagesPane extends JPanel {
 
         //the cell renderer.
         this.stagesList.setCellRenderer(new StageCellRenderer());
+        
+        //select stage
+        this.stagesList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if(e.getValueIsAdjusting()){
+                    JDialog dialog = new StageDialogPanel(StagesPane.this.agenda, model, (Stage) stagesList.getSelectedValue());
+                    dialog.setLocation(getCenterOfScreen(dialog));
+                    dialog.setLocationRelativeTo(null);
+                    dialog.pack();
+                    dialog.setVisible(true);
+                }
+            }
+        });
 
         //the JList inside a scrollPane.
         JScrollPane scrollPane = new JScrollPane(this.stagesList);
@@ -60,7 +73,7 @@ public class StagesPane extends JPanel {
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JDialog dialog = new AddStageDialogPanel(agenda, model);
+                JDialog dialog = new StageDialogPanel(agenda, model);
                 dialog.setLocationRelativeTo(null);
                 dialog.pack();
                 dialog.setLocation(getCenterOfScreen(dialog));

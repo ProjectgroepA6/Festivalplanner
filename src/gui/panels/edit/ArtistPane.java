@@ -2,14 +2,14 @@ package gui.panels.edit;
 
 import agenda.Agenda;
 import agenda.Artist;
-import gui.panels.edit.dialogs.AddArtistDialogPanel;
+import gui.panels.edit.dialogs.ArtistDialogPanel;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by gjoosen on 13/02/15.
@@ -46,6 +46,18 @@ public class ArtistPane extends JPanel {
         
         //the cell renderer.
         this.artistList.setCellRenderer(new ArtistCellRenderer());
+        
+        this.artistList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if(e.getValueIsAdjusting()){
+                    JDialog dialog = new ArtistDialogPanel(ArtistPane.this.agenda, model, (Artist) artistList.getSelectedValue());
+                    dialog.setLocation(getCenterOfScreen(dialog));
+                    dialog.pack();
+                    dialog.setVisible(true);
+                }
+            }
+        });
 
         //the JList inside a scrollPane.
         JScrollPane scrollPane = new JScrollPane(this.artistList);
@@ -60,7 +72,7 @@ public class ArtistPane extends JPanel {
         addArtist.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JDialog dialog = new AddArtistDialogPanel(agenda, model);
+                JDialog dialog = new ArtistDialogPanel(agenda, model);
                 dialog.setLocation(getCenterOfScreen(dialog));
                 dialog.pack();
                 dialog.setVisible(true);
