@@ -9,6 +9,8 @@ import agenda.Agenda;
 import gui.panels.agenda.AgendaPane;
 import gui.panels.edit.EditPane;
 
+import java.awt.*;
+
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame{
 	

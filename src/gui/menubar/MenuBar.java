@@ -2,7 +2,7 @@ package gui.menubar;
 
 import gui.frames.MainFrame;
 
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -41,7 +41,8 @@ public class MenuBar extends JMenuBar{
         JMenuItem editorView = new JMenuItem("editor");
         JMenuItem agendaView = new JMenuItem("agenda");
         JMenuItem simulatorView = new JMenuItem("simulator");
-        
+        JMenuItem fullScreen = new JMenuItem("full screen");
+
         newAction.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
         openAction.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
         exitAction.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
@@ -114,6 +115,19 @@ public class MenuBar extends JMenuBar{
                 System.out.println("agenda view");
                 mainFrame.changeView(MainFrame.Views.AGENDA);
 
+            }
+        });
+        
+        viewMenu.add(fullScreen);
+        fullScreen.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(System.getProperties().getProperty("os.name").equals("Mac OS X")) {
+                    com.apple.eawt.FullScreenUtilities.setWindowCanFullScreen(mainFrame, true);
+                    com.apple.eawt.Application.getApplication().requestToggleFullScreen(mainFrame);
+                }else{
+                    mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                }
             }
         });
 	}
