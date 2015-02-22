@@ -1,13 +1,9 @@
 package gui.main;
 
 import gui.frames.MainFrame;
-import gui.panels.MainPanel;
-import gui.panels.edit.EditPane;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import java.awt.*;
-import java.lang.reflect.Method;
 
 
 public class Main {

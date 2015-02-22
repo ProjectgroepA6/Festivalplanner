@@ -1,15 +1,13 @@
 package gui.frames;
 
 import gui.menubar.MenuBar;
-import gui.panels.MainPanel;
-
-import javax.swing.*;
-
-import agenda.Agenda;
 import gui.panels.agenda.AgendaPane;
 import gui.panels.edit.EditPane;
 
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import agenda.Agenda;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame{
