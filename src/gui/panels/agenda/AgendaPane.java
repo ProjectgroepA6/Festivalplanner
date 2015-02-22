@@ -15,20 +15,31 @@ import agenda.Agenda;
 public class AgendaPane extends JPanel {
 	private GregorianCalendar currentdate;
 	private	DaySelectorPane dayselector;
+	private InfoPane infopanel;
 	private final AgendaScrollPane agendapanel;
 	
 	public AgendaPane(Agenda agenda){
 		setLayout(new BorderLayout());
-		currentdate = new GregorianCalendar(2015, 1, 11);
-		
-		agendapanel = new AgendaScrollPane(agenda, currentdate);
+
+		agendapanel = new AgendaScrollPane(agenda);
 		dayselector = new DaySelectorPane();
+		infopanel = new InfoPane();
+		
 		JScrollPane scroll = new JScrollPane(agendapanel);
 		scroll.getVerticalScrollBar().setUnitIncrement(20);
 		
 		this.add(scroll, BorderLayout.CENTER);
 		this.add(dayselector, BorderLayout.SOUTH);
-		dayselector.setDate(currentdate);
+		this.add(infopanel, BorderLayout.WEST);
+		
+		if(agenda.getActs().size()==0){
+			setCurrentdate(new GregorianCalendar());
+		}else{
+			GregorianCalendar date = agenda.getActs().get(0).getActTime().getBeginTime();
+			setCurrentdate(new GregorianCalendar(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH)));
+		}
+
+
 		dayselector.getButtonLeft().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

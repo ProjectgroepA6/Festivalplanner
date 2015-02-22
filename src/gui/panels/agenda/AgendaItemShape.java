@@ -9,6 +9,7 @@ import agenda.ActTime;
 import agenda.Artist;
 import agenda.Stage;
 
+@SuppressWarnings("serial")
 public class AgendaItemShape extends Rectangle{
 	private int row;
 	private Color color;
