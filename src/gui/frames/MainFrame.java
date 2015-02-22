@@ -9,6 +9,10 @@ import javax.swing.JPanel;
 
 import agenda.Agenda;
 
+import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame{
 	
@@ -27,6 +31,22 @@ public class MainFrame extends JFrame{
 		this.setUndecorated(false);
 		this.setJMenuBar(new MenuBar(this));
 		this.setVisible(true);
+
+        if(System.getProperties().getProperty("os.name").equals("Mac OS X")) {
+            try {
+                Class c = Class.forName("com.apple.eawt.FullScreenUtilities");
+                Method m = c.getMethod("setWindowCanFullScreen", Window.class, Boolean.TYPE);
+                m.invoke(c, this, true);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
 	}
     
     public void changeView(Views view){
