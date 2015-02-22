@@ -38,10 +38,10 @@ public class MenuBar extends JMenuBar{
         JMenuItem pasteAction = new JMenuItem("Paste");
         
         //view 
-        JMenuItem editorView = new JMenuItem("editor");
-        JMenuItem agendaView = new JMenuItem("agenda");
-        JMenuItem simulatorView = new JMenuItem("simulator");
-        JMenuItem fullScreen = new JMenuItem("full screen");
+        JMenuItem editorView = new JMenuItem("Editor");
+        JMenuItem agendaView = new JMenuItem("Agenda");
+        JMenuItem simulatorView = new JMenuItem("Simulator");
+        JMenuItem fullScreen = new JMenuItem("Full screen");
 
         newAction.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
         openAction.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
@@ -93,7 +93,7 @@ public class MenuBar extends JMenuBar{
         editorView.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("editor view");
+                System.out.println("Editor View");
                 mainFrame.changeView(MainFrame.Views.EDITOR);
             }
         });
@@ -102,7 +102,7 @@ public class MenuBar extends JMenuBar{
         simulatorView.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("simulator view");
+                System.out.println("Simulator View");
                 mainFrame.changeView(MainFrame.Views.SIMULATOR);
 
             }
@@ -112,13 +112,13 @@ public class MenuBar extends JMenuBar{
         agendaView.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("agenda view");
+                System.out.println("Agenda View");
                 mainFrame.changeView(MainFrame.Views.AGENDA);
 
             }
         });
         
-        viewMenu.add(fullScreen);
+        /*viewMenu.add(fullScreen);
         fullScreen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -129,7 +129,7 @@ public class MenuBar extends JMenuBar{
                     mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 }
             }
-        });
+        });*/
 	}
 	
 }
