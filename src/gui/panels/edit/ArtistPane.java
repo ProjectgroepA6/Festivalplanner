@@ -10,6 +10,8 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * Created by gjoosen on 13/02/15.
@@ -47,6 +49,9 @@ public class ArtistPane extends JPanel {
         //the cell renderer.
         this.artistList.setCellRenderer(new ArtistCellRenderer());
         
+        //double click
+        this.artistList.addMouseListener(new DoubleClickArtist(this.artistList, this));
+        
         //the JList inside a scrollPane.
         JScrollPane scrollPane = new JScrollPane(this.artistList);
         super.add(scrollPane, BorderLayout.CENTER);
@@ -81,22 +86,6 @@ public class ArtistPane extends JPanel {
             }
         });
         buttonPane.add(removeButton);
-        
-        JButton editButton = new JButton("edit");
-        editButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Object obj = artistList.getSelectedValue();
-                if(obj != null){
-                    JDialog dialog = new ArtistDialogPanel(ArtistPane.this.agenda, model, (Artist) artistList.getSelectedValue());
-                    dialog.setLocation(getCenterOfScreen(dialog));
-                    dialog.pack();
-                    dialog.setVisible(true);
-                }
-            }
-        });
-        buttonPane.add(editButton);
-        
         return buttonPane;
     }
 
@@ -110,6 +99,13 @@ public class ArtistPane extends JPanel {
         Point center = new Point(x, y);
         System.out.println(center.getX() + " - " + center.getY());
         return center;
+    }
+    
+    public void editDialog(){
+        JDialog dialog = new ArtistDialogPanel(ArtistPane.this.agenda, model, (Artist) artistList.getSelectedValue());
+        dialog.setLocation(getCenterOfScreen(dialog));
+        dialog.pack();
+        dialog.setVisible(true);
     }
 }
 
@@ -134,5 +130,26 @@ class ArtistCellRenderer extends JLabel implements ListCellRenderer {
             setForeground(Color.black);
         }
         return this;
+    }
+}
+
+class DoubleClickArtist extends MouseAdapter {
+    protected JList list;
+    private ArtistPane pane;
+
+    public DoubleClickArtist(JList l, ArtistPane pane){
+        this.pane = pane;
+        list = l;
+    }
+
+    public void mouseClicked(MouseEvent e){
+        if(e.getClickCount() == 2){
+            int index = list.locationToIndex(e.getPoint());
+            ListModel dlm = list.getModel();
+            Object item = dlm.getElementAt(index);;
+            list.ensureIndexIsVisible(index);
+            System.out.println("Double clicked on " + item);
+            this.pane.editDialog();
+        }
     }
 }

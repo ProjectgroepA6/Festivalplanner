@@ -5,11 +5,11 @@ import agenda.Agenda;
 import gui.panels.edit.dialogs.ActDialogPanel;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * Created by gjoosen on 19/02/15.
@@ -41,9 +41,12 @@ public class ActsPane extends JPanel {
 
         //the cell renderer.
         this.actsList.setCellRenderer(new ActCellRenderer());
-        
+
         //the JList inside a scrollPane.
         JScrollPane scrollPane = new JScrollPane(this.actsList);
+        
+        //double click
+        this.actsList.addMouseListener(new DoubleClickAct(this.actsList, this));
 
         super.add(scrollPane, BorderLayout.CENTER);
     }
@@ -79,23 +82,15 @@ public class ActsPane extends JPanel {
         });
         buttonPane.add(removeButton);
 
-        JButton edit = new JButton("edit");
-        edit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Object obj = actsList.getSelectedValue();
-                if(obj != null){
-                    JDialog dialog = new ActDialogPanel(ActsPane.this.agenda, model, (Act) actsList.getSelectedValue());
-                    dialog.setLocation(getCenterOfScreen(dialog));
-                    dialog.setLocationRelativeTo(null);
-                    dialog.pack();
-                    dialog.setVisible(true);
-                }
-            }
-        });
-        buttonPane.add(edit);
-
         return buttonPane;
+    }
+    
+    public void editDialog(){
+        JDialog dialog = new ActDialogPanel(ActsPane.this.agenda, model, (Act) actsList.getSelectedValue());
+        dialog.setLocation(getCenterOfScreen(dialog));
+        dialog.setLocationRelativeTo(null);
+        dialog.pack();
+        dialog.setVisible(true);
     }
 
     private Point getCenterOfScreen(JDialog dialog){
@@ -133,5 +128,26 @@ class ActCellRenderer extends JLabel implements ListCellRenderer {
             setForeground(Color.black);
         }
         return this;
+    }
+}
+
+class DoubleClickAct extends MouseAdapter{
+    protected JList list;
+    private ActsPane pane;
+
+    public DoubleClickAct(JList l, ActsPane pane){
+        this.pane = pane;
+        list = l;
+    }
+
+    public void mouseClicked(MouseEvent e){
+        if(e.getClickCount() == 2){
+            int index = list.locationToIndex(e.getPoint());
+            ListModel dlm = list.getModel();
+            Object item = dlm.getElementAt(index);;
+            list.ensureIndexIsVisible(index);
+            System.out.println("Double clicked on " + item);
+            this.pane.editDialog();
+        }
     }
 }
