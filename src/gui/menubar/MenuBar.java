@@ -46,6 +46,7 @@ public class MenuBar extends JMenuBar{
         JMenuItem editorView = new JMenuItem("Editor");
         JMenuItem agendaView = new JMenuItem("Agenda");
         JMenuItem simulatorView = new JMenuItem("Simulator");
+        JMenuItem tableView = new JMenuItem("Table");
 
         newAction.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
         openAction.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
@@ -119,6 +120,14 @@ public class MenuBar extends JMenuBar{
                 System.out.println("Agenda View");
                 mainFrame.changeView(MainFrame.Views.AGENDA);
 
+            }
+        });
+
+        viewMenu.add(tableView);
+        tableView.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainFrame.changeView(MainFrame.Views.TABLE);
             }
         });
 	}

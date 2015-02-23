@@ -8,6 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import agenda.Agenda;
+import gui.panels.table.Table;
+import sun.tools.jconsole.Tab;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
@@ -16,14 +18,14 @@ import java.lang.reflect.Method;
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame{
 	
-    public enum Views{EDITOR, SIMULATOR, AGENDA};
+    public enum Views{EDITOR, SIMULATOR, AGENDA, TABLE};
     
     private Agenda agenda;
     private JPanel currentPanel;
     
     public MainFrame(){
         this.agenda = new Agenda();
-        this.currentPanel = new EditPane(this.agenda);
+        this.currentPanel = new Table(this.agenda);
         this.add(this.currentPanel);
 		this.setResizable(true);
 		this.setBounds(100,100,1440,900);
@@ -59,6 +61,9 @@ public class MainFrame extends JFrame{
                 break;
             case SIMULATOR:
                 //komt later nog.
+                break;
+            case TABLE:
+                this.updateView(new Table(this.agenda));
                 break;
         }
     }
