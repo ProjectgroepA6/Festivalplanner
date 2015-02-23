@@ -47,18 +47,6 @@ public class ArtistPane extends JPanel {
         //the cell renderer.
         this.artistList.setCellRenderer(new ArtistCellRenderer());
         
-        this.artistList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if(e.getValueIsAdjusting()){
-                    JDialog dialog = new ArtistDialogPanel(ArtistPane.this.agenda, model, (Artist) artistList.getSelectedValue());
-                    dialog.setLocation(getCenterOfScreen(dialog));
-                    dialog.pack();
-                    dialog.setVisible(true);
-                }
-            }
-        });
-
         //the JList inside a scrollPane.
         JScrollPane scrollPane = new JScrollPane(this.artistList);
         super.add(scrollPane, BorderLayout.CENTER);
@@ -93,6 +81,21 @@ public class ArtistPane extends JPanel {
             }
         });
         buttonPane.add(removeButton);
+        
+        JButton editButton = new JButton("edit");
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object obj = artistList.getSelectedValue();
+                if(obj != null){
+                    JDialog dialog = new ArtistDialogPanel(ArtistPane.this.agenda, model, (Artist) artistList.getSelectedValue());
+                    dialog.setLocation(getCenterOfScreen(dialog));
+                    dialog.pack();
+                    dialog.setVisible(true);
+                }
+            }
+        });
+        buttonPane.add(editButton);
         
         return buttonPane;
     }

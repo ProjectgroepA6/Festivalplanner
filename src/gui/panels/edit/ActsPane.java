@@ -42,21 +42,6 @@ public class ActsPane extends JPanel {
         //the cell renderer.
         this.actsList.setCellRenderer(new ActCellRenderer());
         
-        
-        this.actsList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                
-                if(e.getValueIsAdjusting()) {
-                    JDialog dialog = new ActDialogPanel(ActsPane.this.agenda, model, (Act) actsList.getSelectedValue());
-                    dialog.setLocation(getCenterOfScreen(dialog));
-                    dialog.setLocationRelativeTo(null);
-                    dialog.pack();
-                    dialog.setVisible(true);
-                }
-            }
-        });
-
         //the JList inside a scrollPane.
         JScrollPane scrollPane = new JScrollPane(this.actsList);
 
@@ -93,6 +78,23 @@ public class ActsPane extends JPanel {
             }
         });
         buttonPane.add(removeButton);
+
+        JButton edit = new JButton("edit");
+        edit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object obj = actsList.getSelectedValue();
+                if(obj != null){
+                    JDialog dialog = new ActDialogPanel(ActsPane.this.agenda, model, (Act) actsList.getSelectedValue());
+                    dialog.setLocation(getCenterOfScreen(dialog));
+                    dialog.setLocationRelativeTo(null);
+                    dialog.pack();
+                    dialog.setVisible(true);
+                }
+            }
+        });
+        buttonPane.add(edit);
+
         return buttonPane;
     }
 

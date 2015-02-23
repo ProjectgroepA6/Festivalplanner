@@ -46,20 +46,6 @@ public class StagesPane extends JPanel {
         //the cell renderer.
         this.stagesList.setCellRenderer(new StageCellRenderer());
         
-        //select stage
-        this.stagesList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if(e.getValueIsAdjusting()){
-                    JDialog dialog = new StageDialogPanel(StagesPane.this.agenda, model, (Stage) stagesList.getSelectedValue());
-                    dialog.setLocation(getCenterOfScreen(dialog));
-                    dialog.setLocationRelativeTo(null);
-                    dialog.pack();
-                    dialog.setVisible(true);
-                }
-            }
-        });
-
         //the JList inside a scrollPane.
         JScrollPane scrollPane = new JScrollPane(this.stagesList);
 
@@ -95,6 +81,24 @@ public class StagesPane extends JPanel {
         });
         
         buttonPane.add(remove);
+        
+        JButton edit = new JButton("edit");
+        edit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object obj = stagesList.getSelectedValue();
+                if(obj != null){
+                    JDialog dialog = new StageDialogPanel(StagesPane.this.agenda, model, (Stage) stagesList.getSelectedValue());
+                    dialog.setLocation(getCenterOfScreen(dialog));
+                    dialog.setLocationRelativeTo(null);
+                    dialog.pack();
+                    dialog.setVisible(true);
+                }
+            }
+        });
+        
+        buttonPane.add(edit);
+        
         return buttonPane;
     }
 
