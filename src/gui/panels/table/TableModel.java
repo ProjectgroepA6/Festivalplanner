@@ -21,7 +21,7 @@ public class TableModel extends AbstractTableModel {
     public TableModel(Agenda agenda){
         this.acts = new ArrayList<>();
         this.agenda = agenda;
-
+        
         for(Act act: this.agenda.getActs()){
             this.acts.add(act);
         }
