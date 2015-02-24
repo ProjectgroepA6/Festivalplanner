@@ -27,7 +27,7 @@ public class ActsPane extends JPanel {
         this.model = new DefaultListModel();
         this.detailsPanel = panel;
         super.setLayout(new BorderLayout());
-        super.add(new Label("Acts"), BorderLayout.NORTH);
+        super.add(new JLabel("Acts"), BorderLayout.NORTH);
         super.add(new JPanel(), BorderLayout.EAST);
         super.add(new JPanel(), BorderLayout.WEST);
         super.add(this.buttonRow(), BorderLayout.SOUTH);

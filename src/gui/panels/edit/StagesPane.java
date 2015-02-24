@@ -29,7 +29,7 @@ public class StagesPane extends JPanel {
         this.detailsPanel = detailsPanel;
         
         super.setLayout(new BorderLayout());
-        super.add(new Label("Stages"), BorderLayout.NORTH);
+        super.add(new JLabel("Stages"), BorderLayout.NORTH);
         super.add(new JPanel(), BorderLayout.EAST);
         super.add(new JPanel(), BorderLayout.WEST);
         super.add(this.buttonRow(), BorderLayout.SOUTH);

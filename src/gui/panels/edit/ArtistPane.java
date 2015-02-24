@@ -30,7 +30,7 @@ public class ArtistPane extends JPanel {
         this.detailsPanel = detailsPanel;
         
         super.setLayout(new BorderLayout());
-        super.add(new Label("Artists"), BorderLayout.NORTH);
+        super.add(new JLabel("Artists"), BorderLayout.NORTH);
         super.add(new JPanel(), BorderLayout.EAST);
         super.add(new JPanel(), BorderLayout.WEST);
         super.add(this.buttonRow(), BorderLayout.SOUTH);
