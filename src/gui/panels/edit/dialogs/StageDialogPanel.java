@@ -88,6 +88,12 @@ public class StageDialogPanel extends JDialog{
                 JOptionPane.showMessageDialog(null, "Name can't be empty!", "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
             }else{
+                for(Stage stage: this.agenda.getStages()){
+                    if(stage.getName().equals(this.name.getText())){
+                        JOptionPane.showMessageDialog(null, "Name can't be used twice!", "Warning", JOptionPane.WARNING_MESSAGE);
+                        return;
+                    }
+                }
                 this.model.removeElement(this.stage);
                 this.stage.setName(this.name.getText());
                 this.model.addElement(this.stage);
@@ -98,6 +104,12 @@ public class StageDialogPanel extends JDialog{
                 JOptionPane.showMessageDialog(null, "Name can't be empty!", "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
             }else{
+                for(Stage stage: this.agenda.getStages()){
+                    if(stage.getName().equals(this.name.getText())){
+                        JOptionPane.showMessageDialog(null, "Name can't be used twice!", "Warning", JOptionPane.WARNING_MESSAGE);
+                        return;
+                    }
+                }
                 Stage stage = new Stage(this.name.getText());
                 this.agenda.addStage(stage);
                 this.model.addElement(stage);
